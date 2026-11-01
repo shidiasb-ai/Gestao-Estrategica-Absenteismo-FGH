@@ -131,7 +131,7 @@ const $=id=>document.getElementById(id);
 let selectedSignal=null,selectedAction=null;
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function toast(s){$('toast').textContent=s;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),2300)}
-function go(page){document.querySelectorAll('[id^="page-"]').forEach(x=>x.classList.add('hidden'));$('page-'+page).classList.remove('hidden');
+function go(page){document.querySelectorAll('[id^="page-"]').forEach(x=>x.classList.add('hidden'));const target=$('page-'+page);if(target)target.classList.remove('hidden');document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));window.scrollTo({top:0,behavior:'smooth'});}
 function resetDecision(){['dSignal','dPattern','dContext','dImpact'].forEach(id=>$(id).value='');$('decisionOutput').classList.add('hidden');$('decisionOutput').innerHTML='';}
 function analyzeDecision(){
  const sig=$('dSignal').value,pattern=$('dPattern').value,context=$('dContext').value,impact=$('dImpact').value;
@@ -164,7 +164,8 @@ function analyzeDecision(){
 
 
 window.resetDecision=resetDecision;
-document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));window.scrollTo({top:0,behavior:'smooth'})}
+
+window.resetDecision=resetDecision;
 function signalCard(s){return '<button class="signal" data-signal="'+s.id+'"><span class="symbol">'+s.icon+'</span><strong>'+esc(s.title)+'</strong><span>'+esc(s.desc)+'</span><div style="margin-top:11px;color:#28658d;font-size:11px;font-weight:850">Ver perguntas e possibilidades →</div></button>'}
 function renderSignals(){ $('quickSignals').innerHTML=signals.slice(0,6).map(signalCard).join('');$('allSignals').innerHTML=signals.filter(s=>$('signalFilter').value==='todos'||s.group===$('signalFilter').value).map(signalCard).join('');document.querySelectorAll('[data-signal]').forEach(b=>b.onclick=()=>openSignal(b.dataset.signal))}
 function openSignal(id){selectedSignal=signals.find(s=>s.id===id);if(!selectedSignal)return;$('modalTitle').textContent=selectedSignal.title;$('modalContent').innerHTML='<p>'+esc(selectedSignal.desc)+'</p><div class="callout"><b>Pergunta para orientar a análise</b><br>'+esc(selectedSignal.question)+'</div><div class="detail-grid"><div><h3>Possíveis passos para o setor</h3><ol>'+selectedSignal.actions.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol><h3>O que observar no BI</h3><p>'+esc(selectedSignal.indicator)+'</p></div><div class="detail-aside"><h3>Cuidados</h3><p>'+esc(selectedSignal.avoid)+'</p><h3>Quando pedir apoio</h3><p>'+esc(selectedSignal.support)+'</p></div></div>';$('copyModal').onclick=()=>copyText(selectedSignal.title+'\n\nPergunta: '+selectedSignal.question+'\n\nPassos:\n'+selectedSignal.actions.map((x,i)=>(i+1)+'. '+x).join('\n')+'\n\nCuidados: '+selectedSignal.avoid+'\n\nApoio: '+selectedSignal.support);$('modalBg').classList.add('show')}
