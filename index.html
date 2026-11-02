@@ -266,9 +266,9 @@ function resetDecision(){
  $('decisionOutput').classList.add('hidden');$('decisionOutput').innerHTML='';
 }
 function analyzeDecision(){
- const paretoData=collectParetoData();if(!paretoData)return;
  const sig=$('dSignal').value,pattern=$('dPattern').value,context=$('dContext').value,impact=$('dImpact').value;
  if(!sig||!pattern||!context||!impact){toast('Responda às quatro seleções para gerar a orientação.');return}
+ const paretoData=collectParetoData();if(!paretoData)return;
  const signalLabels={taxa:'Taxa elevada ou em crescimento',setor:'Setor entre os maiores índices',funcao:'Concentração por função',motivos:'Motivos frequentes',atestado:'Predomínio de motivos relacionados à saúde',custo:'Custo com horas perdidas elevado',horas:'Horas perdidas afetam a cobertura',falta:'Faltas em horas, atrasos ou questões de fluxo',melhora:'Melhora do indicador'};const s=signals.find(x=>x.id===sig)||{title:signalLabels[sig]||'Situação observada no BI'};let route='',priority='',reason='',first=[],interventionIds=[],partners='',check='';
  const insufficient=pattern==='incerto'||context==='unknown'||impact==='none';
  if(insufficient){route='Investigar antes de intervir';priority='Prioridade: esclarecer o cenário';reason='Ainda faltam elementos para escolher uma intervenção com segurança. O próximo passo é qualificar a leitura do BI e compreender o contexto, sem presumir causas.';first=['Rever a série histórica e comparar períodos equivalentes.','Verificar o tamanho da equipe, a jornada e o perfil das atividades.','Conversar com a liderança imediata e ouvir a equipe de forma agregada.','Depois dessa verificação, retornar à ferramenta e definir a rota de atuação.'];interventionIds=[2];partners='Gerência do setor; RH ou Saúde Ocupacional se a investigação indicar necessidade.';check='O sinal se mantém? A concentração e o impacto ficaram mais claros?';
