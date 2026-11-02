@@ -252,11 +252,6 @@ let selectedSignal=null,selectedAction=null;
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function toast(s){$('toast').textContent=s;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),2300)}
 function go(page){document.querySelectorAll('[id^="page-"]').forEach(x=>x.classList.add('hidden'));const target=$('page-'+page);if(target)target.classList.remove('hidden');document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));window.scrollTo({top:0,behavior:'smooth'});}window.go=go;
-function resetDecision(){
- ['dSignal','dPattern','dContext','dImpact','paretoPeriod','paretoRate'].forEach(id=>{if($(id))$(id).value='';});
- $('paretoRows').innerHTML='';renderParetoInputs();
- $('decisionOutput').classList.add('hidden');$('decisionOutput').innerHTML='';
-}
 function analyzeDecision(){
  const sig=$('dSignal').value,pattern=$('dPattern').value,context=$('dContext').value,impact=$('dImpact').value;
  if(!sig||!pattern||!context||!impact){toast('Responda às quatro seleções para gerar a orientação.');return}
