@@ -216,7 +216,6 @@ function resetDecision(){
  $('paretoRows').innerHTML='';addParetoRow();
  $('decisionOutput').classList.add('hidden');$('decisionOutput').innerHTML='';
 }
-['dSignal','dPattern','dContext','dImpact'].forEach(id=>$(id).value='');$('decisionOutput').classList.add('hidden');$('decisionOutput').innerHTML='';}
 (()=>{
 const signals=[
 {id:'taxa',icon:'↗',title:'Taxa elevada ou em crescimento',group:'indicador',desc:'A taxa do setor está acima do histórico ou aumentou nos últimos períodos.',question:'A mudança é pontual ou se mantém? O que mudou na rotina, na composição da equipe ou no contexto do setor?',actions:['Comparar pelo menos três períodos e observar se a variação se mantém.','Verificar se houve mudança de quadro, escala, demanda, perfil assistencial ou funcionamento.','Realizar escuta breve com lideranças e equipe para levantar fatores organizacionais.','Escolher um aspecto que esteja ao alcance do setor para testar uma melhoria.'],avoid:'Não concluir que o setor tem um problema de compromisso. A taxa, isoladamente, não explica as causas.',support:'Se aparecerem fatores estruturais, de dimensionamento ou de saúde ocupacional, articular com as áreas responsáveis.',indicator:'Acompanhar a tendência da taxa no BI, considerando períodos comparáveis e o contexto do setor.'},
