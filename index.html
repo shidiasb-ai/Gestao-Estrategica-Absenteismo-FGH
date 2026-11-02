@@ -16,7 +16,7 @@
 
 .decision-data-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .decision-field input{width:100%;border:1px solid var(--line);border-radius:8px;padding:11px;background:#fff;color:var(--ink)}
-.pareto-rows{display:grid;gap:8px}
+.pareto-rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 14px}\n.pareto-row{display:grid;grid-template-columns:minmax(0,1fr) 92px;gap:8px;align-items:center;padding:5px 0;border-bottom:1px solid var(--line)}\n.pareto-row label{font-size:12px;color:var(--ink);line-height:1.3}\n.pareto-row input{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px;background:#fff;color:var(--ink)}\n@media(max-width:680px){.pareto-rows{grid-template-columns:1fr}}
 .pareto-row{display:grid;grid-template-columns:minmax(0,1fr) 150px 38px;gap:8px;align-items:center}
 .pareto-row select,.pareto-row input{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px;background:#fff;color:var(--ink)}
 .pareto-row .remove-row{border:1px solid var(--line);background:#fff;color:var(--red);border-radius:8px;height:38px;font-weight:800}
@@ -65,14 +65,13 @@
 <div class="decision-panel decision-data" style="margin-bottom:14px">
 <span class="tag teal">Dados do período</span>
 <h3>Informe as ocorrências que serão analisadas</h3>
-<p>Use os dados agregados do BI. Informe a quantidade de eventos de cada justificativa no período; não informe nomes nem dados individuais.</p>
+<p>Use os dados agregados do BI. As justificativas já aparecem listadas. Preencha somente a quantidade ao lado daquelas que tiveram ocorrências; deixe as demais em branco. Não informe nomes nem dados individuais.</p>
 <div class="decision-data-grid">
 <div class="decision-field"><label for="paretoPeriod">Período de referência</label><input id="paretoPeriod" type="month" /></div>
 <div class="decision-field"><label for="paretoRate">Taxa de absenteísmo no BI (%)</label><input id="paretoRate" type="number" min="0" max="100" step="0.01" placeholder="Ex.: 4,25" /></div>
 </div>
 <div class="section-title" style="margin-top:12px"><div><h2>Quantidade de eventos por justificativa</h2><p>Uma ocorrência equivale a um evento. A mesma pessoa pode gerar mais de um evento.</p></div></div>
-<div id="paretoRows" class="pareto-rows"></div>
-<div class="actions" style="margin-top:10px"><button class="btn" type="button" id="addParetoRow">+ Adicionar justificativa</button></div>
+<div class="pareto-rows" id="paretoRows" aria-label="Quantidade de eventos por justificativa"></div>
 <div class="decision-note">A lista contém somente justificativas classificadas como “SIM” em “Conta para cálculo de absenteísmo”, conforme a tabela da Política da FGH. A taxa do BI é contextual e não entra na soma do Pareto.</div>
 </div>
 <div class="decision-wrap" style="margin-top:15px">
@@ -156,25 +155,14 @@ const FISHBONE_GROUPS=[
  ['Equipe e relações de trabalho',['Integração e comunicação','Clima e relações no trabalho','Acolhimento e suporte']],
  ['Saúde e fatores contextuais',['Riscos ocupacionais a investigar','Acesso a ações preventivas','Fatores externos/contextuais a compreender']]
 ];
-function addParetoRow(reason='',count=''){
+function renderParetoInputs(){
  const host=$('paretoRows');if(!host)return;
- const row=document.createElement('div');row.className='pareto-row';
- const select=document.createElement('select');select.setAttribute('aria-label','Justificativa');
- select.innerHTML='<option value="">Selecione uma justificativa</option>'+ABSENCE_REASONS.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join('');
- select.value=reason;
- const input=document.createElement('input');input.type='number';input.min='0';input.step='1';input.placeholder='Nº de eventos';input.setAttribute('aria-label','Quantidade de eventos');input.value=count;
- const remove=document.createElement('button');remove.type='button';remove.className='remove-row';remove.textContent='×';remove.title='Remover justificativa';remove.onclick=()=>{row.remove();refreshParetoOptions();};
- select.onchange=refreshParetoOptions;
- row.append(select,input,remove);host.append(row);refreshParetoOptions();
-}
-function refreshParetoOptions(){
- const used=[...document.querySelectorAll('#paretoRows .pareto-row select')].map(x=>x.value).filter(Boolean);
- document.querySelectorAll('#paretoRows .pareto-row select').forEach(sel=>{[...sel.options].forEach(o=>{if(o.value)o.disabled=o.value!==sel.value&&used.includes(o.value);});});
+ host.innerHTML=ABSENCE_REASONS.map((reason,i)=>'<div class="pareto-row"><label for="paretoCount'+i+'">'+esc(reason)+'</label><input id="paretoCount'+i+'" type="number" min="0" step="1" inputmode="numeric" placeholder="Qtd." data-pareto-reason="'+esc(reason)+'" aria-label="Quantidade de eventos: '+esc(reason)+'"></div>').join('');
 }
 function collectParetoData(){
  const period=$('paretoPeriod').value,rate=$('paretoRate').value;
- const rows=[...document.querySelectorAll('#paretoRows .pareto-row')];
- const entries=rows.map(r=>({reason:r.querySelector('select').value,count:r.querySelector('input').value.trim()})).filter(x=>x.reason||x.count!=='');
+ const rows=[...document.querySelectorAll('#paretoRows [data-pareto-reason]')];
+ const entries=rows.map(input=>({reason:input.dataset.paretoReason,count:input.value.trim()})).filter(x=>x.count!=='');
  if(!period||rate===''||!entries.length){toast('Informe o período, a taxa do BI e ao menos uma justificativa com quantidade de eventos.');return null;}
  if(!Number.isFinite(Number(rate))||Number(rate)<0||Number(rate)>100){toast('Informe uma taxa de absenteísmo entre 0 e 100%.');return null;}
  if(entries.some(x=>!x.reason||x.count===''||!Number.isInteger(Number(x.count))||Number(x.count)<0)){toast('Confira as justificativas e informe quantidades inteiras, iguais ou maiores que zero.');return null;}
@@ -216,7 +204,7 @@ function refreshFishboneDiagram(){
 function getFishboneText(){return [...document.querySelectorAll('[data-fishbone]')].map(el=>{const label=el.parentElement.querySelector('label').textContent;return label+': '+el.value.trim().replace(/\n/g,'; ');}).join(' | ');}
 function resetDecision(){
  ['dSignal','dPattern','dContext','dImpact','paretoPeriod','paretoRate'].forEach(id=>{if($(id))$(id).value='';});
- $('paretoRows').innerHTML='';addParetoRow();
+ renderParetoInputs();
  $('decisionOutput').classList.add('hidden');$('decisionOutput').innerHTML='';
 }
 (()=>{
@@ -262,7 +250,7 @@ function toast(s){$('toast').textContent=s;$('toast').classList.add('show');setT
 function go(page){document.querySelectorAll('[id^="page-"]').forEach(x=>x.classList.add('hidden'));const target=$('page-'+page);if(target)target.classList.remove('hidden');document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));window.scrollTo({top:0,behavior:'smooth'});}window.go=go;
 function resetDecision(){
  ['dSignal','dPattern','dContext','dImpact','paretoPeriod','paretoRate'].forEach(id=>{if($(id))$(id).value='';});
- $('paretoRows').innerHTML='';addParetoRow();
+ $('paretoRows').innerHTML='';renderParetoInputs();
  $('decisionOutput').classList.add('hidden');$('decisionOutput').innerHTML='';
 }
 function analyzeDecision(){
