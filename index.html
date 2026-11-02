@@ -13,6 +13,35 @@
 @media(max-width:950px){.layout{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid var(--line);padding:9px 14px}.nav{display:flex;overflow:auto;gap:4px}.nav-caption,.side-tip{display:none}.nav button{white-space:nowrap;width:auto}.main{padding:20px}.hero{grid-template-columns:1fr}.hero-side{border-left:0;border-top:1px solid #ffffff35;padding:14px 0 0}.grid,.signal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.month-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.fivew-grid{grid-template-columns:1fr}.fivew-field:nth-child(6),.fivew-field:nth-child(7){grid-column:auto}.decision-wrap{grid-template-columns:1fr}.top{position:static;left:auto;right:auto;transform:none;display:flex;width:100%;max-width:none;min-width:0;margin:0;padding:14px 16px;gap:10px}.brand{display:flex;flex:1;min-width:0;gap:10px}.brand>div:last-child{min-width:0}.mark{flex:0 0 42px}.brand strong,.brand small{overflow-wrap:anywhere}.brand strong{font-size:15px;line-height:1.25}.brand small{display:block;font-size:11px;line-height:1.35;margin-top:3px}.top-note{display:none}.page-head{display:block}.actions{margin-top:13px}.page-head h1{font-size:23px}.main{padding:15px}.grid,.grid.two,.signal-grid,.detail-grid,.month-list{grid-template-columns:1fr}.hero{padding:19px}.hero h2{font-size:20px}.nav button{font-size:11px;padding:9px}.card{padding:15px}}
 @media print{@page{size:auto;margin:12mm}html,body,.app,.layout,.main{background:var(--bg)!important;color:var(--ink)!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}aside,.top,.actions,.btn,.text-btn,.toast{display:none!important}.layout{display:block!important}.main{padding:0!important;max-width:none!important}.card,.hero,.detail,.signal,.month,.decision-result,.detail-aside,.callout{break-inside:avoid;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;box-shadow:var(--shadow)!important}.modal-bg{display:none!important}.footer{color:var(--muted)!important;border-top:1px solid var(--line);margin-top:22px;padding-top:14px}.page-head{break-after:avoid}.hidden{display:none!important}}
+
+.decision-data-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.decision-field input{width:100%;border:1px solid var(--line);border-radius:8px;padding:11px;background:#fff;color:var(--ink)}
+.pareto-rows{display:grid;gap:8px}
+.pareto-row{display:grid;grid-template-columns:minmax(0,1fr) 150px 38px;gap:8px;align-items:center}
+.pareto-row select,.pareto-row input{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px;background:#fff;color:var(--ink)}
+.pareto-row .remove-row{border:1px solid var(--line);background:#fff;color:var(--red);border-radius:8px;height:38px;font-weight:800}
+.pareto-output{margin:18px 0;padding:17px;background:#fff;border:1px solid var(--line);border-radius:12px}
+.pareto-output h3{margin:0 0 4px;color:var(--navy)}
+.pareto-meta{display:flex;gap:9px;flex-wrap:wrap;margin:10px 0}
+.pareto-meta span{background:#edf4f8;border-radius:8px;padding:7px 10px;font-size:12px;color:var(--navy);font-weight:750}
+.pareto-chart{width:100%;overflow-x:auto}
+.pareto-chart svg{display:block;min-width:640px;width:100%;height:auto}
+.fishbone{margin-top:18px;padding:18px;background:#fff;border:1px solid var(--line);border-radius:12px}
+.fishbone h3{margin:0 0 5px;color:var(--navy)}
+.fishbone-diagram{width:100%;overflow-x:auto;margin:12px 0}
+.fishbone-diagram svg{display:block;min-width:680px;width:100%;height:auto}
+.fishbone-edit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.fishbone-edit{border:1px solid var(--line);border-radius:10px;padding:11px;background:#f8fafb}
+.fishbone-edit label{display:block;font-size:12px;color:var(--navy);font-weight:800;margin-bottom:6px}
+.fishbone-edit textarea{width:100%;min-height:74px;border:1px solid var(--line);border-radius:7px;padding:8px;font:12px/1.45 inherit;color:var(--ink);resize:vertical}
+.table-wrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:12px}
+.policy-table{width:100%;border-collapse:collapse;font-size:12px}
+.policy-table th,.policy-table td{padding:11px 13px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+.policy-table th{background:#edf4f8;color:var(--navy);font-weight:850;white-space:nowrap}
+.policy-table tr:last-child td{border-bottom:0}
+.policy-table .counts{color:#26766d;font-weight:850}
+.policy-table .not-counts{color:#8b621c;font-weight:850}
+@media(max-width:620px){.decision-data-grid,.fishbone-edit-grid{grid-template-columns:1fr}.pareto-row{grid-template-columns:minmax(0,1fr) 95px 34px}.pareto-row select,.pareto-row input{font-size:11px;padding:8px}}
 </style>
 </head>
 <body>
@@ -26,11 +55,26 @@
 <button data-page="acoes"><span class="ico">✦</span>Banco de intervenções</button>
 <button data-page="conversa"><span class="ico">☷</span>Conversa com a equipe</button>
 <button data-page="agenda"><span class="ico">▦</span>Calendário de mobilização</button>
+<button data-page="justificativas"><span class="ico">▤</span>Justificativas de faltas e abonos</button>
 </nav><div class="side-tip"><b>Como usar</b>Abra o BI da FGH em outra janela. Identifique o sinal que merece atenção e consulte aqui possibilidades de atuação.</div></aside>
 <main class="main" id="main">
 <section id="page-decisao" class="hidden">
 <div class="page-head"><div><div class="eyebrow">Ferramenta interativa de gestão</div><h1>Apoio à decisão</h1><p>Use o que você observou no BI para receber uma orientação estruturada sobre o próximo passo. Não é necessário importar dados nem registrar informações pessoais.</p></div><div class="actions"><button class="btn" onclick="resetDecision()">Recomeçar análise</button></div></div>
 <div class="callout"><b>Como funciona:</b> selecione a situação que chamou sua atenção e responda a quatro perguntas rápidas. A ferramenta organiza a análise, sugere uma rota de atuação e apresenta possibilidades de intervenção. A decisão final continua sendo da liderança.</div>
+
+<div class="decision-panel decision-data" style="margin-bottom:14px">
+<span class="tag teal">Dados do período</span>
+<h3>Informe as ocorrências que serão analisadas</h3>
+<p>Use os dados agregados do BI. Informe a quantidade de eventos de cada justificativa no período; não informe nomes nem dados individuais.</p>
+<div class="decision-data-grid">
+<div class="decision-field"><label for="paretoPeriod">Período de referência</label><input id="paretoPeriod" type="month" /></div>
+<div class="decision-field"><label for="paretoRate">Taxa de absenteísmo no BI (%)</label><input id="paretoRate" type="number" min="0" max="100" step="0.01" placeholder="Ex.: 4,25" /></div>
+</div>
+<div class="section-title" style="margin-top:12px"><div><h2>Quantidade de eventos por justificativa</h2><p>Uma ocorrência equivale a um evento. A mesma pessoa pode gerar mais de um evento.</p></div></div>
+<div id="paretoRows" class="pareto-rows"></div>
+<div class="actions" style="margin-top:10px"><button class="btn" type="button" id="addParetoRow">+ Adicionar justificativa</button></div>
+<div class="decision-note">A lista contém somente justificativas classificadas como “SIM” em “Conta para cálculo de absenteísmo”, conforme a tabela da Política da FGH. A taxa do BI é contextual e não entra na soma do Pareto.</div>
+</div>
 <div class="decision-wrap" style="margin-top:15px">
 <div class="decision-panel"><span class="tag teal">1 · situação observada</span><h3>O que chamou sua atenção no BI?</h3><p>Escolha o sinal mais relevante. Se houver mais de um, comece pelo que gera maior impacto na rotina.</p>
 <div class="decision-field"><label for="dSignal">Situação principal</label><select id="dSignal"><option value="">Selecione uma situação</option><option value="taxa">Taxa elevada ou em crescimento</option><option value="setor">Setor aparece entre os maiores índices</option><option value="funcao">Uma função concentra taxa ou ausências</option><option value="motivos">Um ou mais motivos aparecem com frequência</option><option value="atestado">Predominam motivos relacionados à saúde</option><option value="custo">Custo com horas perdidas está elevado</option><option value="horas">Horas perdidas afetam a cobertura</option><option value="falta">Faltas em horas, atrasos ou questões de fluxo</option><option value="melhora">O indicador melhorou e precisa ser sustentado</option></select></div>
@@ -87,12 +131,79 @@
 <div class="callout">A liderança pode escolher um tema por mês ou por ciclo. Não é necessário realizar todas as propostas. Priorize o que fizer sentido para o contexto do setor.</div>
 <div class="month-list" id="monthList"></div>
 </section>
+<section id="page-justificativas" class="hidden">
+<div class="page-head"><div><div class="eyebrow">Consulta institucional</div><h1>Justificativas de faltas e abonos</h1><p>Consulte a classificação das justificativas e identifique quais entram no cálculo do absenteísmo, conforme a Política de Justificativas de Faltas e Abonos da FGH.</p></div><div class="actions"><button class="btn" onclick="window.print()">Imprimir tabela</button></div></div>
+<div class="callout">Esta seção é de consulta. Para o Pareto do Apoio à decisão, a ferramenta disponibiliza apenas justificativas classificadas como “SIM” na coluna “Conta para cálculo de absenteísmo”. Desconto no pagamento, isoladamente, não define essa classificação.</div>
+<div class="filterbar"><select id="justFilter" aria-label="Filtrar justificativas"><option value="todas">Todas as justificativas</option><option value="sim">Conta para absenteísmo</option><option value="nao">Não conta para absenteísmo</option></select></div>
+<div class="table-wrap"><table class="policy-table"><thead><tr><th>Justificativa apresentada</th><th>Conta para cálculo de absenteísmo</th></tr></thead><tbody id="justTableBody"></tbody></table></div>
+<div class="callout warning" style="margin-top:16px"><b>Importante:</b> esta visualização apresenta a classificação de incidência no absenteísmo. Para confirmar observações específicas, descontos e ação correspondente no TOTVS, consulte a tabela integral e atualizada da política institucional.</div>
+<div class="decision-note">Atenção: As informações apresentadas nesta seção foram extraídas da Política de Justificativas de Faltas e Abonos da FGH. Para consultar o documento institucional completo e verificar eventuais atualizações, acesse a política disponível na Intranet da FGH.</div>
+</section>
 <div class="footer"><strong>Idealização e concepção: Shirley Dias</strong><br>Hospital Metropolitano Sul Dom Hélder Câmara (HDH)<br>Iniciativa própria de inovação em gestão, desenvolvida com apoio de inteligência artificial.<br><br>Central de Ativação dos Setores · FGH · Material orientador.<br>O BI institucional permanece como fonte oficial dos indicadores.</div>
 </main></div></div>
 <div class="modal-bg" id="modalBg" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal"><div class="modal-head"><div><div class="eyebrow">Orientação para a liderança</div><h2 id="modalTitle"></h2></div><button class="close" id="closeModal" aria-label="Fechar">×</button></div><div id="modalContent"></div><div class="modal-actions"><button class="btn" id="copyModal">Copiar orientação</button><button class="btn primary" id="doneModal">Fechar</button></div></div></div>
 <div class="toast" id="toast"></div>
 <script>
+const ABSENCE_REASONS=["Atestado médico","Acompanhamento de filho em consulta médica – CLT","Acompanhamento de filho em consulta médica – AC","Acompanhamento de esposa ou companheira gestante","Acompanhamento de familiar em consulta médica – AC","Ausência por consulta/exame – Gestantes","Ausência por consulta/exame","Sessão de tratamento psicológico/fisioterapia","Convocações Judiciais ou Eleitorais","Doação de Sangue","Prestando Exame Vestibular","Óbito","Casamento","Exames preventivos de câncer","Entradas e Saídas Irregulares","Entrada Tarde","Esquecimento de marcação","Falta Abonada","Falta injustificada","Falta justificada","Folga Compensatória por Prestação de Serviços Eleitorais","Participação em atividades sindicais – AC","Saída Antecipada"];
+const FISHBONE_GROUPS=[
+ ['Organização do trabalho',['Escala e distribuição de tarefas','Cobertura de turnos','Carga e ritmo de trabalho']],
+ ['Processos e métodos',['Fluxos e rotinas pouco claros','Comunicação entre turnos','Dificuldades de registro ou orientação']],
+ ['Gestão e dimensionamento',['Dimensionamento e composição da equipe','Planejamento de cobertura','Apoio e acompanhamento da liderança']],
+ ['Ambiente e recursos',['Condições físicas do ambiente','Equipamentos e materiais','Ergonomia e segurança']],
+ ['Equipe e relações de trabalho',['Integração e comunicação','Clima e relações no trabalho','Acolhimento e suporte']],
+ ['Saúde e fatores contextuais',['Riscos ocupacionais a investigar','Acesso a ações preventivas','Fatores externos/contextuais a compreender']]
+];
+function addParetoRow(reason='',count=''){
+ const host=$('paretoRows');if(!host)return;
+ const row=document.createElement('div');row.className='pareto-row';
+ const select=document.createElement('select');select.setAttribute('aria-label','Justificativa');
+ select.innerHTML='<option value="">Selecione uma justificativa</option>'+ABSENCE_REASONS.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join('');
+ select.value=reason;
+ const input=document.createElement('input');input.type='number';input.min='0';input.step='1';input.placeholder='Nº de eventos';input.setAttribute('aria-label','Quantidade de eventos');input.value=count;
+ const remove=document.createElement('button');remove.type='button';remove.className='remove-row';remove.textContent='×';remove.title='Remover justificativa';remove.onclick=()=>{row.remove();refreshParetoOptions();};
+ select.onchange=refreshParetoOptions;
+ row.append(select,input,remove);host.append(row);refreshParetoOptions();
+}
+function refreshParetoOptions(){
+ const used=[...document.querySelectorAll('#paretoRows .pareto-row select')].map(x=>x.value).filter(Boolean);
+ document.querySelectorAll('#paretoRows .pareto-row select').forEach(sel=>{[...sel.options].forEach(o=>{if(o.value)o.disabled=o.value!==sel.value&&used.includes(o.value);});});
+}
+function collectParetoData(){
+ const period=$('paretoPeriod').value,rate=$('paretoRate').value;
+ const rows=[...document.querySelectorAll('#paretoRows .pareto-row')];
+ const entries=rows.map(r=>({reason:r.querySelector('select').value,count:r.querySelector('input').value.trim()})).filter(x=>x.reason||x.count!=='');
+ if(!period||rate===''||!entries.length){toast('Informe o período, a taxa do BI e ao menos uma justificativa com quantidade de eventos.');return null;}
+ if(!Number.isFinite(Number(rate))||Number(rate)<0||Number(rate)>100){toast('Informe uma taxa de absenteísmo entre 0 e 100%.');return null;}
+ if(entries.some(x=>!x.reason||x.count===''||!Number.isInteger(Number(x.count))||Number(x.count)<0)){toast('Confira as justificativas e informe quantidades inteiras, iguais ou maiores que zero.');return null;}
+ if(new Set(entries.map(x=>x.reason)).size!==entries.length){toast('Cada justificativa deve aparecer apenas uma vez no período.');return null;}
+ const valid=entries.map(x=>({reason:x.reason,count:Number(x.count)})).filter(x=>x.count>0).sort((a,b)=>b.count-a.count);
+ const total=valid.reduce((a,x)=>a+x.count,0);
+ if(!total){toast('A soma dos eventos precisa ser maior que zero.');return null;}
+ let acc=0;valid.forEach(x=>{x.percent=x.count/total*100;acc+=x.percent;x.cumulative=acc;});
+ return {period,rate:Number(rate),entries:valid,total};
+}
+function paretoSvg(entries){
+ const W=900,H=370,L=55,R=55,T=24,B=92,plotW=W-L-R,plotH=H-T-B,n=entries.length,step=plotW/n,bw=Math.min(48,step*.62),max=Math.max(...entries.map(x=>x.count))*1.12;
+ const y=v=>T+plotH-(v/max)*plotH,cy=v=>T+plotH-(v/100)*plotH;
+ let bars='',labels='',points=[];
+ entries.forEach((x,i)=>{const cx=L+step*(i+.5),yy=y(x.count),hh=T+plotH-yy;bars+=`<rect x="${cx-bw/2}" y="${yy}" width="${bw}" height="${hh}" rx="4" fill="#28658d"/><text x="${cx}" y="${yy-7}" text-anchor="middle" font-size="11" fill="#23384a">${x.count}</text>`;labels+=`<text transform="translate(${cx+3},${T+plotH+14}) rotate(48)" text-anchor="start" font-size="10" fill="#66798a">${esc(x.reason.length>22?x.reason.slice(0,21)+'…':x.reason)}</text>`;points.push(`${cx},${cy(x.cumulative)}`);});
+ const line=`<polyline points="${points.join(' ')}" fill="none" stroke="#13877c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`+points.map(p=>{const [x,yv]=p.split(',');return `<circle cx="${x}" cy="${yv}" r="4" fill="#13877c"/>`;}).join('');
+ const grid=[0,.25,.5,.75,1].map(v=>{const yy=T+plotH-v*plotH;return `<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" stroke="#dce5eb"/><text x="${L-10}" y="${yy+4}" text-anchor="end" font-size="10" fill="#66798a">${Math.round(max*v)}</text><text x="${W-R+10}" y="${yy+4}" font-size="10" fill="#66798a">${Math.round(v*100)}%</text>`;}).join('');
+ const thresholdY=cy(80);
+ return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Gráfico de Pareto da distribuição das ocorrências por justificativa">${grid}<line x1="${L}" y1="${T+plotH}" x2="${W-R}" y2="${T+plotH}" stroke="#9aabb8"/>${bars}<line x1="${L}" y1="${thresholdY}" x2="${W-R}" y2="${thresholdY}" stroke="#9a6817" stroke-dasharray="5 5" opacity=".8"/>${line}${labels}<text x="${L}" y="13" font-size="10" fill="#66798a">Eventos</text><text x="${W-R}" y="13" text-anchor="end" font-size="10" fill="#66798a">Percentual acumulado</text><text x="${W-R-4}" y="${thresholdY-6}" text-anchor="end" font-size="10" fill="#9a6817">Referência de 80%</text></svg>`;
+}
+function renderPareto(data){
+ const month=data.period.split('-');const periodLabel=month[1]+'/'+month[0];
+ return `<div class="pareto-output"><h3>Distribuição das ocorrências por justificativa</h3><p class="muted" style="margin:3px 0">Período: ${periodLabel} · Taxa de absenteísmo informada no BI: ${data.rate.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})}%</p><div class="pareto-meta"><span>Total de eventos: ${data.total}</span><span>Justificativas com ocorrências: ${data.entries.length}</span><span>Maior frequência: ${esc(data.entries[0].reason)} (${data.entries[0].count})</span></div><div class="pareto-chart">${paretoSvg(data.entries)}</div><div class="decision-note">As barras representam a quantidade de eventos; a linha representa o percentual acumulado. A linha tracejada de 80% é uma referência visual, não uma regra automática para determinar causas ou ações.</div><div style="overflow:auto;margin-top:12px"><table class="policy-table"><thead><tr><th>Justificativa</th><th>Eventos</th><th>Percentual</th><th>Acumulado</th></tr></thead><tbody>${data.entries.map(x=>`<tr><td>${esc(x.reason)}</td><td>${x.count}</td><td>${x.percent.toLocaleString('pt-BR',{maximumFractionDigits:1})}%</td><td>${x.cumulative.toLocaleString('pt-BR',{maximumFractionDigits:1})}%</td></tr>`).join('')}</tbody></table></div></div>`;
+}
+function fishboneMarkup(sig,data){
+ const focus=data.entries[0]?.reason||'Ocorrências de absenteísmo';
+ const svg=`<svg viewBox="0 0 900 260" role="img" aria-label="Diagrama de Ishikawa com categorias de investigação"><line x1="55" y1="130" x2="760" y2="130" stroke="#28658d" stroke-width="4"/><polygon points="760,119 785,130 760,141" fill="#28658d"/><rect x="785" y="95" width="108" height="70" rx="9" fill="#e8f5f2" stroke="#13877c" stroke-width="2"/><text x="839" y="121" text-anchor="middle" font-size="12" font-weight="700" fill="#102b46">Efeito a</text><text x="839" y="139" text-anchor="middle" font-size="12" font-weight="700" fill="#102b46">investigar</text>${FISHBONE_GROUPS.map((g,i)=>{const top=i%2===0, x=130+i*118, y=top?38:222;return `<line x1="${x}" y1="${y}" x2="${x+75}" y2="130" stroke="#13877c" stroke-width="2.5"/><text x="${x}" y="${top?23:247}" font-size="11" fill="#102b46" font-weight="700">${esc(g[0])}</text>`;}).join('')}<text x="60" y="112" font-size="10" fill="#66798a">Possíveis fatores</text></svg>`;
+ return `<div class="fishbone"><span class="tag teal">Investigação de causas</span><h3>Diagrama de Ishikawa</h3><p class="muted" style="font-size:12px;margin:3px 0">Efeito em análise: <b>${esc(focus)}</b>. As sugestões são hipóteses para investigação, não causas comprovadas.</p><div class="fishbone-diagram">${svg}</div><div class="fishbone-edit-grid">${FISHBONE_GROUPS.map((g,i)=>`<div class="fishbone-edit"><label for="fishbone${i}">${esc(g[0])}</label><textarea id="fishbone${i}" data-fishbone="${i}">${esc(g[1].join('\n'))}</textarea></div>`).join('')}</div><p class="decision-note">Edite as hipóteses, exclua as que não se aplicam ou acrescente fatores identificados pela liderança. Verifique as hipóteses antes de transformá-las em ações.</p></div>`;
+}
+function getFishboneText(){return [...document.querySelectorAll('[data-fishbone]')].map(el=>{const label=el.parentElement.querySelector('label').textContent;return label+': '+el.value.trim().replace(/\n/g,'; ');}).join(' | ');}
 function resetDecision(){['dSignal','dPattern','dContext','dImpact'].forEach(id=>$(id).value='');$('decisionOutput').classList.add('hidden');$('decisionOutput').innerHTML='';}
+['dSignal','dPattern','dContext','dImpact'].forEach(id=>$(id).value='');$('decisionOutput').classList.add('hidden');$('decisionOutput').innerHTML='';}
 (()=>{
 const signals=[
 {id:'taxa',icon:'↗',title:'Taxa elevada ou em crescimento',group:'indicador',desc:'A taxa do setor está acima do histórico ou aumentou nos últimos períodos.',question:'A mudança é pontual ou se mantém? O que mudou na rotina, na composição da equipe ou no contexto do setor?',actions:['Comparar pelo menos três períodos e observar se a variação se mantém.','Verificar se houve mudança de quadro, escala, demanda, perfil assistencial ou funcionamento.','Realizar escuta breve com lideranças e equipe para levantar fatores organizacionais.','Escolher um aspecto que esteja ao alcance do setor para testar uma melhoria.'],avoid:'Não concluir que o setor tem um problema de compromisso. A taxa, isoladamente, não explica as causas.',support:'Se aparecerem fatores estruturais, de dimensionamento ou de saúde ocupacional, articular com as áreas responsáveis.',indicator:'Acompanhar a tendência da taxa no BI, considerando períodos comparáveis e o contexto do setor.'},
@@ -136,6 +247,7 @@ function toast(s){$('toast').textContent=s;$('toast').classList.add('show');setT
 function go(page){document.querySelectorAll('[id^="page-"]').forEach(x=>x.classList.add('hidden'));const target=$('page-'+page);if(target)target.classList.remove('hidden');document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));window.scrollTo({top:0,behavior:'smooth'});}window.go=go;
 function resetDecision(){['dSignal','dPattern','dContext','dImpact'].forEach(id=>$(id).value='');$('decisionOutput').classList.add('hidden');$('decisionOutput').innerHTML='';}
 function analyzeDecision(){
+ const paretoData=collectParetoData();if(!paretoData)return;
  const sig=$('dSignal').value,pattern=$('dPattern').value,context=$('dContext').value,impact=$('dImpact').value;
  if(!sig||!pattern||!context||!impact){toast('Responda às quatro seleções para gerar a orientação.');return}
  const signalLabels={taxa:'Taxa elevada ou em crescimento',setor:'Setor entre os maiores índices',funcao:'Concentração por função',motivos:'Motivos frequentes',atestado:'Predomínio de motivos relacionados à saúde',custo:'Custo com horas perdidas elevado',horas:'Horas perdidas afetam a cobertura',falta:'Faltas em horas, atrasos ou questões de fluxo',melhora:'Melhora do indicador'};const s=signals.find(x=>x.id===sig)||{title:signalLabels[sig]||'Situação observada no BI'};let route='',priority='',reason='',first=[],interventionIds=[],partners='',check='';
@@ -175,15 +287,15 @@ function analyzeDecision(){
     ['Where — Onde será feito?',where],
     ['When — Quando será feito?',when],
     ['Who — Quem será responsável?',partners],
-    ['How — Como será feito?',how+' Etapas iniciais: '+first.join(' ')],
+    ['How — Como será feito?',how+' Hipóteses para validar no Ishikawa: '+getFishboneText()+'. Etapas iniciais: '+first.join(' ')],
     ['How much — Quanto custará?', 'A estimar conforme a ação pactuada. Priorizar inicialmente recursos e estruturas já disponíveis; eventual custo adicional deverá ser avaliado com as áreas responsáveis.']
    ];
  })();
- const html='<div class="decision-result"><span class="route">'+esc(route)+'</span> <span class="priority">'+esc(priority)+'</span><h2>Próximo passo recomendado</h2><p>'+esc(reason)+'</p><h3>O que fazer primeiro</h3><ol>'+first.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol><h3>Intervenções que podem ajudar</h3><div class="grid two">'+picks.map(a=>'<article class="card"><span class="tag teal">'+esc(({organizacao:'Organização',escuta:'Escuta',prevencao:'Prevenção',processos:'Processos'}[a.group]))+'</span><h3>'+esc(a.title)+'</h3><p>'+esc(a.goal)+'</p></article>').join('')+'</div><div class="detail-grid"><div class="detail-aside"><h3>Quem pode precisar participar</h3><p>'+esc(partners)+'</p></div><div class="detail-aside"><h3>Como revisar a decisão</h3><p>'+esc(check)+'</p></div></div><div class="callout warning" style="margin-top:14px"><b>Limite da análise:</b> esta orientação é uma hipótese de trabalho baseada nas opções selecionadas. Não estabelece causa do absenteísmo nem substitui análise técnica, normas institucionais ou decisão da gestão.</div><div class="fivew-twoh"><div class="eyebrow">Planejamento da intervenção</div><h3>Plano de ação · 5W2H</h3><p class="fivew-intro">Proposta inicial vinculada à análise. Revise e edite os campos para adequar o plano à realidade do setor.</p><div class="fivew-grid" id="fiveWFields"></div></div><div class="result-actions"><button class="btn primary" onclick="window.print()">Imprimir orientação e plano</button><button class="btn" id="copyDecision">Copiar orientação + 5W2H</button><button class="btn" onclick="resetDecision()">Nova análise</button></div></div>';
+ const html='<div class="decision-result">'+renderPareto(paretoData)+fishboneMarkup(sig,paretoData)+'<span class="route">'+esc(route)+'</span> <span class="priority">'+esc(priority)+'</span><h2>Próximo passo recomendado</h2><p>'+esc(reason)+'</p><h3>O que fazer primeiro</h3><ol>'+first.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol><h3>Intervenções que podem ajudar</h3><div class="grid two">'+picks.map(a=>'<article class="card"><span class="tag teal">'+esc(({organizacao:'Organização',escuta:'Escuta',prevencao:'Prevenção',processos:'Processos'}[a.group]))+'</span><h3>'+esc(a.title)+'</h3><p>'+esc(a.goal)+'</p></article>').join('')+'</div><div class="detail-grid"><div class="detail-aside"><h3>Quem pode precisar participar</h3><p>'+esc(partners)+'</p></div><div class="detail-aside"><h3>Como revisar a decisão</h3><p>'+esc(check)+'</p></div></div><div class="callout warning" style="margin-top:14px"><b>Limite da análise:</b> esta orientação é uma hipótese de trabalho baseada nas opções selecionadas. Não estabelece causa do absenteísmo nem substitui análise técnica, normas institucionais ou decisão da gestão.</div><div class="fivew-twoh"><div class="eyebrow">Planejamento da intervenção</div><h3>Plano de ação · 5W2H</h3><p class="fivew-intro">Proposta inicial vinculada à análise. Revise e edite os campos para adequar o plano à realidade do setor.</p><div class="fivew-grid" id="fiveWFields"></div></div><div class="result-actions"><button class="btn primary" onclick="window.print()">Imprimir orientação e plano</button><button class="btn" id="copyDecision">Copiar orientação + 5W2H</button><button class="btn" onclick="resetDecision()">Nova análise</button></div></div>';
  $('decisionOutput').innerHTML=html;
  $('fiveWFields').innerHTML=planDefaults.map((f,i)=>'<label class="fivew-field"><span>'+esc(f[0])+'</span><textarea data-fivew="'+i+'">'+esc(f[1])+'</textarea></label>').join('');
  $('decisionOutput').classList.remove('hidden');
- $('copyDecision').onclick=()=>copyText(['APOIO À DECISÃO — ABSENTEÍSMO','Situação: '+s.title,'Rota: '+route,'','PRÓXIMO PASSO RECOMENDADO',reason,'','O QUE FAZER PRIMEIRO',...first.map((x,i)=>(i+1)+'. '+x),'','INTERVENÇÕES',...picks.map(x=>x.title),'','QUEM PODE PRECISAR PARTICIPAR',partners,'','COMO REVISAR A DECISÃO',check,'','PLANO DE AÇÃO — 5W2H',...[...document.querySelectorAll('[data-fivew]')].map((el)=>{const label=el.parentElement.querySelector('span').textContent;return label+'\n'+el.value;}),'','LIMITE DA ANÁLISE: orientação não estabelece causa nem substitui decisão técnica/gerencial.'].join(String.fromCharCode(10)));
+ $('copyDecision').onclick=()=>copyText(['APOIO À DECISÃO — ABSENTEÍSMO','Período: '+paretoData.period,'Taxa de absenteísmo no BI: '+paretoData.rate+'%','Total de eventos: '+paretoData.total,...paretoData.entries.map(x=>x.reason+': '+x.count+' eventos ('+x.percent.toFixed(1)+'%; acumulado '+x.cumulative.toFixed(1)+'%)'),'Situação: '+s.title,'Rota: '+route,'','ISHIKAWA',getFishboneText(),'','PRÓXIMO PASSO RECOMENDADO',reason,'','O QUE FAZER PRIMEIRO',...first.map((x,i)=>(i+1)+'. '+x),'','INTERVENÇÕES',...picks.map(x=>x.title),'','QUEM PODE PRECISAR PARTICIPAR',partners,'','COMO REVISAR A DECISÃO',check,'','PLANO DE AÇÃO — 5W2H',...[...document.querySelectorAll('[data-fivew]')].map((el)=>{const label=el.parentElement.querySelector('span').textContent;return label+'\n'+el.value;}),'','LIMITE DA ANÁLISE: orientação não estabelece causa nem substitui decisão técnica/gerencial.'].join(String.fromCharCode(10)));
  $('decisionOutput').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
@@ -198,9 +310,16 @@ function renderActions(){let f=$('actionFilter').value;$('actionList').innerHTML
 function openAction(i){selectedAction=interventions[i];let a=selectedAction;$('modalTitle').textContent=a.title;$('modalContent').innerHTML='<p>'+esc(a.goal)+'</p><h3>Como colocar em prática</h3><ol>'+a.steps.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol><div class="detail-grid"><div class="detail-aside"><h3>Quando considerar</h3><p>'+esc(a.when)+'</p></div><div class="detail-aside"><h3>Articulação possível</h3><p>'+esc(a.support)+'</p></div></div><p class="muted" style="margin-top:16px;font-size:12px">A iniciativa deve respeitar as normas, fluxos e competências institucionais. Não substitui avaliação técnica das áreas responsáveis.</p>';$('copyModal').onclick=()=>copyText(a.title+'\n'+a.goal+'\n\n'+a.steps.map((x,i)=>(i+1)+'. '+x).join('\n')+'\n\nQuando considerar: '+a.when+'\nApoio: '+a.support);$('modalBg').classList.add('show')}
 function copyText(t){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(()=>toast('Orientação copiada.')).catch(()=>toast('Não foi possível copiar automaticamente.'))}else toast('Copie o texto pela opção de impressão.')}
 function copyConversation(){let t='CONVERSA COM A EQUIPE\nAntes: use dados agregados, não exponha nomes ou informações de saúde.\n\n'+[...document.querySelectorAll('.question')].map(x=>x.innerText).join('\n\n');copyText(t)}
+function renderJustifications(){
+ const yes=ABSENCE_REASONS;
+ const no=['Licença adoção','Licença gestante','Licença médica','Licença para serviço militar','Licença paternidade','Exame SESMT (periódico, retorno etc.)','Falha de Registro no REP','Manutenção do REP','Folga Compensatória','Ocorrências de infraestrutura (falta de energia, água, internet etc.)','Trabalho em outra unidade','Trabalho externo','Treinamento','Home office'];
+ const filter=$('justFilter')?.value||'todas';
+ const rows=[...yes.map(x=>({name:x,counts:true})),...no.map(x=>({name:x,counts:false}))].filter(x=>filter==='todas'||(filter==='sim'?x.counts:!x.counts));
+ $('justTableBody').innerHTML=rows.map(x=>'<tr><td>'+esc(x.name)+'</td><td class="'+(x.counts?'counts':'not-counts')+'">'+(x.counts?'SIM':'NÃO')+'</td></tr>').join('');
+}
 function renderMonths(){$('monthList').innerHTML=months.map((m,i)=>'<article class="month"><small>Ciclo '+String(i+1).padStart(2,'0')+'</small><b>'+m[0]+' · '+m[1]+'</b><ul>'+m[2].map(option=>'<li>'+esc(option)+'</li>').join('')+'</ul></article>').join('')}
 window.analyzeDecision=analyzeDecision;
-document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>go(b.dataset.page));$('analyzeBtn').addEventListener('click',function(e){e.preventDefault();try{window.analyzeDecision()}catch(err){console.error('Falha na análise de absenteísmo:',err);toast('Erro ao gerar orientação: '+(err&&err.message?err.message:'verifique o console'))}});$('signalFilter').onchange=renderSignals;$('actionFilter').onchange=renderActions;$('closeModal').onclick=()=> $('modalBg').classList.remove('show');$('doneModal').onclick=()=> $('modalBg').classList.remove('show');$('modalBg').onclick=e=>{if(e.target===$('modalBg'))$('modalBg').classList.remove('show')};document.addEventListener('keydown',e=>{if(e.key==='Escape')$('modalBg').classList.remove('show')});renderSignals();renderActions();renderMonths();
+document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>go(b.dataset.page));addParetoRow();$('addParetoRow').onclick=()=>addParetoRow();$('justFilter').onchange=renderJustifications;renderJustifications();$('analyzeBtn').addEventListener('click',function(e){e.preventDefault();try{window.analyzeDecision()}catch(err){console.error('Falha na análise de absenteísmo:',err);toast('Erro ao gerar orientação: '+(err&&err.message?err.message:'verifique o console'))}});$('signalFilter').onchange=renderSignals;$('actionFilter').onchange=renderActions;$('closeModal').onclick=()=> $('modalBg').classList.remove('show');$('doneModal').onclick=()=> $('modalBg').classList.remove('show');$('modalBg').onclick=e=>{if(e.target===$('modalBg'))$('modalBg').classList.remove('show')};document.addEventListener('keydown',e=>{if(e.key==='Escape')$('modalBg').classList.remove('show')});renderSignals();renderActions();renderMonths();
 })();
 </script>
 </body></html>
