@@ -138,7 +138,7 @@
 <div class="page-head"><div><div class="eyebrow">Consulta institucional</div><h1>Justificativas de faltas e abonos</h1><p>Consulte a classificação das justificativas e identifique quais entram no cálculo do absenteísmo, conforme a Política de Justificativas de Faltas e Abonos da FGH.</p></div><div class="actions"><button class="btn" onclick="window.print()">Imprimir tabela</button></div></div>
 <div class="callout">Esta seção é de consulta. Para o Pareto do Apoio à decisão, a ferramenta disponibiliza apenas justificativas classificadas como “SIM” na coluna “Conta para cálculo de absenteísmo”. Desconto no pagamento, isoladamente, não define essa classificação.</div>
 <div class="filterbar"><select id="justFilter" aria-label="Filtrar justificativas"><option value="todas">Todas as justificativas</option><option value="sim">Conta para absenteísmo</option><option value="nao">Não conta para absenteísmo</option></select></div>
-<div class="table-wrap"><table class="policy-table"><thead><tr><th>Justificativa apresentada</th><th>Observação</th><th>Ação da chefia</th><th>Gera desconto no pagamento</th><th>Gera desconto de vale-refeição e auxílio-transporte</th><th>Conta para cálculo de absenteísmo</th><th>Ação no TOTVS</th></tr></thead><tbody id="justTableBody"></tbody></table></div>
+<div class="table-wrap"><table class="policy-table"><thead><tr><th>Justificativa apresentada</th><th>Observação</th><th>Gera desconto no pagamento</th><th>Gera desconto de vale-refeição e auxílio-transporte</th><th>Conta para cálculo de absenteísmo</th><th>Ação no TOTVS</th></tr></thead><tbody id="justTableBody"></tbody></table></div>
 <div class="decision-note">Atenção: As informações apresentadas nesta seção foram extraídas da Política de Justificativas de Faltas e Abonos da FGH. Para consultar o documento institucional completo e verificar eventuais atualizações, acesse a política disponível na Intranet da FGH.</div>
 </section>
 <div class="footer"><strong>Idealização e concepção: Shirley Dias</strong><br>Hospital Metropolitano Sul Dom Hélder Câmara (HDH)<br>Iniciativa própria de inovação em gestão, desenvolvida com apoio de inteligência artificial.<br><br>Central de Ativação dos Setores · FGH · Material orientador.<br>O BI institucional permanece como fonte oficial dos indicadores.</div>
@@ -320,7 +320,7 @@ function copyConversation(){let t='CONVERSA COM A EQUIPE\nAntes: use dados agreg
 function renderJustifications(){
  const filter=$('justFilter')?.value||'todas';
  const rows=POLICY_ROWS.filter(x=>filter==='todas'||(filter==='sim'?x.counts==='SIM':x.counts==='NÃO'));
- $('justTableBody').innerHTML=rows.map(x=>'<tr><td>'+esc(x.name)+'</td><td>'+esc(x.observation)+'</td><td>'+esc(x.chefia)+'</td><td>'+x.payment+'</td><td>'+x.benefits+'</td><td class="'+(x.counts==='SIM'?'counts':'not-counts')+'">'+x.counts+'</td><td>'+esc(x.totvs)+'</td></tr>').join('');
+ $('justTableBody').innerHTML=rows.map(x=>'<tr><td>'+esc(x.name)+'</td><td>'+esc(x.observation)+'</td><td>'+x.payment+'</td><td>'+x.benefits+'</td><td class="'+(x.counts==='SIM'?'counts':'not-counts')+'">'+x.counts+'</td><td>'+esc(x.totvs)+'</td></tr>').join('');
 }
 function renderMonths(){$('monthList').innerHTML=months.map((m,i)=>'<article class="month"><small>Ciclo '+String(i+1).padStart(2,'0')+'</small><b>'+m[0]+' · '+m[1]+'</b><ul>'+m[2].map(option=>'<li>'+esc(option)+'</li>').join('')+'</ul></article>').join('')}
 window.analyzeDecision=analyzeDecision;
