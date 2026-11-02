@@ -144,6 +144,7 @@
 <div class="modal-bg" id="modalBg" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal"><div class="modal-head"><div><div class="eyebrow">Orientação para a liderança</div><h2 id="modalTitle"></h2></div><button class="close" id="closeModal" aria-label="Fechar">×</button></div><div id="modalContent"></div><div class="modal-actions"><button class="btn" id="copyModal">Copiar orientação</button><button class="btn primary" id="doneModal">Fechar</button></div></div></div>
 <div class="toast" id="toast"></div>
 <script>
+function $(id){return document.getElementById(id);}
 const ABSENCE_REASONS=["Atestado médico","Acompanhamento de filho em consulta médica – CLT","Acompanhamento de filho em consulta médica – AC","Acompanhamento de esposa ou companheira gestante","Acompanhamento de familiar em consulta médica – AC","Ausência por consulta/exame – Gestantes","Ausência por consulta/exame","Sessão de tratamento psicológico/fisioterapia","Convocações Judiciais ou Eleitorais","Doação de Sangue","Prestando Exame Vestibular","Óbito","Casamento","Exames preventivos de câncer","Entradas e Saídas Irregulares","Entrada Tarde","Esquecimento de marcação","Falta Abonada","Falta injustificada","Falta justificada","Folga Compensatória por Prestação de Serviços Eleitorais","Participação em atividades sindicais – AC","Saída Antecipada"];
 const FISHBONE_GROUPS=[
  ['Organização do trabalho',['Escala e distribuição de tarefas','Cobertura de turnos','Carga e ritmo de trabalho']],
@@ -257,7 +258,11 @@ let selectedSignal=null,selectedAction=null;
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function toast(s){$('toast').textContent=s;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),2300)}
 function go(page){document.querySelectorAll('[id^="page-"]').forEach(x=>x.classList.add('hidden'));const target=$('page-'+page);if(target)target.classList.remove('hidden');document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));window.scrollTo({top:0,behavior:'smooth'});}window.go=go;
-function resetDecision(){['dSignal','dPattern','dContext','dImpact'].forEach(id=>$(id).value='');$('decisionOutput').classList.add('hidden');$('decisionOutput').innerHTML='';}
+function resetDecision(){
+ ['dSignal','dPattern','dContext','dImpact','paretoPeriod','paretoRate'].forEach(id=>{if($(id))$(id).value='';});
+ $('paretoRows').innerHTML='';addParetoRow();
+ $('decisionOutput').classList.add('hidden');$('decisionOutput').innerHTML='';
+}
 function analyzeDecision(){
  const paretoData=collectParetoData();if(!paretoData)return;
  const sig=$('dSignal').value,pattern=$('dPattern').value,context=$('dContext').value,impact=$('dImpact').value;
