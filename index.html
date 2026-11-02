@@ -145,6 +145,8 @@
 <div class="toast" id="toast"></div>
 <script>
 function $(id){return document.getElementById(id);}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function toast(s){const el=$('toast');if(!el)return;el.textContent=s;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2300)}
 const ABSENCE_REASONS=["Atestado médico","Acompanhamento de filho em consulta médica – CLT","Acompanhamento de filho em consulta médica – AC","Acompanhamento de esposa ou companheira gestante","Acompanhamento de familiar em consulta médica – AC","Ausência por consulta/exame – Gestantes","Ausência por consulta/exame","Sessão de tratamento psicológico/fisioterapia","Convocações Judiciais ou Eleitorais","Doação de Sangue","Prestando Exame Vestibular","Óbito","Casamento","Exames preventivos de câncer","Entradas e Saídas Irregulares","Entrada Tarde","Esquecimento de marcação","Falta Abonada","Falta injustificada","Falta justificada","Folga Compensatória por Prestação de Serviços Eleitorais","Participação em atividades sindicais – AC","Saída Antecipada"];
 const FISHBONE_GROUPS=[
  ['Organização do trabalho',['Escala e distribuição de tarefas','Cobertura de turnos','Carga e ritmo de trabalho']],
