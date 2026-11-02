@@ -30,10 +30,13 @@
 .pareto-meta span{background:#edf4f8;border-radius:8px;padding:7px 10px;font-size:12px;color:var(--navy);font-weight:750}
 .pareto-chart{width:100%;overflow-x:auto}
 .pareto-chart svg{display:block;min-width:640px;width:100%;height:auto}
-.fishbone{margin-top:18px;padding:18px;background:#fff;border:1px solid var(--line);border-radius:12px}
-.fishbone h3{margin:0 0 5px;color:var(--navy)}
-.fishbone-diagram{width:100%;overflow-x:auto;margin:12px 0}
-.fishbone-diagram svg{display:block;min-width:680px;width:100%;height:auto}
+.fishbone{margin-top:18px;padding:22px;background:linear-gradient(145deg,#fff 0%,#f8fbff 100%);border:1px solid #e4edf5;border-radius:18px;box-shadow:0 8px 24px rgba(25,55,85,.06)}
+.fishbone h3{margin:7px 0 5px;color:var(--navy);font-size:19px}
+.fishbone-diagram{width:100%;overflow-x:auto;margin:18px 0 22px;padding:4px 0 8px}
+.fishbone-diagram svg{display:block;min-width:980px;width:100%;height:auto;overflow:visible}
+.fishbone-edit{border:1px solid #e5edf5;border-radius:14px;padding:14px;background:linear-gradient(145deg,#fff,#f8fafc);box-shadow:0 3px 12px rgba(25,55,85,.035)}
+.fishbone-edit label{font-size:13px}
+.fishbone-edit textarea{border-radius:10px;min-height:88px;background:#fff}
 .fishbone-edit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .fishbone-edit{border:1px solid var(--line);border-radius:10px;padding:11px;background:#f8fafb}
 .fishbone-edit label{display:block;font-size:12px;color:var(--navy);font-weight:800;margin-bottom:6px}
@@ -189,12 +192,44 @@ function paretoSvg(entries){
 }
 function renderPareto(data){
  const month=data.period.split('-');const periodLabel=month[1]+'/'+month[0];
- return `<div class="pareto-output"><h3>Distribuição das ocorrências por justificativa</h3><p class="muted" style="margin:3px 0">Período: ${periodLabel} · Taxa de absenteísmo informada no BI: ${data.rate.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})}%</p><div class="pareto-meta"><span>Total de eventos: ${data.total}</span><span>Justificativas com ocorrências: ${data.entries.length}</span><span>Maior frequência: ${esc(data.entries[0].reason)} (${data.entries[0].count})</span></div><div class="pareto-chart">${paretoSvg(data.entries)}</div><div class="decision-note">As barras representam a quantidade de eventos; a linha representa o percentual acumulado. A linha tracejada de 80% é uma referência visual, não uma regra automática para determinar causas ou ações.</div><div style="overflow:auto;margin-top:12px"><table class="policy-table"><thead><tr><th>Justificativa</th><th>Eventos</th><th>Percentual</th><th>Acumulado</th></tr></thead><tbody>${data.entries.map(x=>`<tr><td>${esc(x.reason)}</td><td>${x.count}</td><td>${x.percent.toLocaleString('pt-BR',{maximumFractionDigits:1})}%</td><td>${x.cumulative.toLocaleString('pt-BR',{maximumFractionDigits:1})}%</td></tr>`).join('')}</tbody></table></div></div>`;
-}
-function fishboneMarkup(sig,data){
+ return `<div class="pareto-output"><h3>Distribuição das ocorrências por justificativa</h3><p class="muted" style="margin:3px 0">Período: ${periodLabel} · Taxa de absenteísmo informada no BI: ${data.rate.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})}%</p><div class="pareto-meta"><span>Total de eventos: ${data.total}</span><span>Justificativas com ocorrências: ${data.entries.length}</span><span>Maior frequência: ${esc(data.entries[0].reason)} (${data.entries[0].count})</span></div><div class="pareto-chart">${paretoSvg(data.entries)}</div><div class="decision-note">As barras representam a quantidade de eventos; a linha representa o percentual acumulado. A linha tracejada de 80% é uma referência visual, não uma regra automática para determinar causas ou ações.</div><div style="overflow:auto;margin-tofunction fishboneMarkup(sig,data){
  const focus=data.entries[0]?.reason||'Ocorrências de absenteísmo';
- const svg=`<svg viewBox="0 0 900 290" role="img" aria-label="Diagrama de Ishikawa editável com categorias e hipóteses de investigação"><line x1="35" y1="145" x2="770" y2="145" stroke="#28658d" stroke-width="4"/><polygon points="770,134 795,145 770,156" fill="#28658d"/><rect x="795" y="108" width="98" height="74" rx="9" fill="#e8f5f2" stroke="#13877c" stroke-width="2"/><text x="844" y="136" text-anchor="middle" font-size="11" font-weight="700" fill="#102b46">Efeito a</text><text x="844" y="152" text-anchor="middle" font-size="11" font-weight="700" fill="#102b46">investigar</text>${FISHBONE_GROUPS.map((g,i)=>{const top=i%2===0,x=105+i*125,y=top?55:235,tx=x-35,ty=top?17:258;return `<line x1="${x}" y1="${y}" x2="${x+70}" y2="145" stroke="#13877c" stroke-width="2.5"/><text data-fishbone-svg-title="${i}" x="${tx}" y="${ty}" font-size="11" fill="#102b46" font-weight="700">${esc(g[0])}</text><text data-fishbone-svg-causes="${i}" x="${tx}" y="${top?32:274}" font-size="9" fill="#66798a">${esc(g[1][0])}</text>`;}).join('')}</svg>`;
+ const palette=[
+  {fill:'#edf2ff',stroke:'#6b8ff0',icon:'⚙'},
+  {fill:'#eaf8f0',stroke:'#69c59a',icon:'▣'},
+  {fill:'#fff5df',stroke:'#efbd58',icon:'♧'},
+  {fill:'#eaf8f0',stroke:'#69c59a',icon:'⌘'},
+  {fill:'#edf2ff',stroke:'#6b8ff0',icon:'♡'},
+  {fill:'#f7edff',stroke:'#bd8be0',icon:'▤'}
+ ];
+ const topX=[24,384,744],bottomX=[104,464,824],cardW=320,cardH=118;
+ const cards=FISHBONE_GROUPS.map((g,i)=>{
+  const top=i<3,x=top?topX[i]:bottomX[i-3],y=top?18:404;
+  const p=palette[i],title=g[0],cause=g[1][0]||'Adicione hipóteses no campo abaixo';
+  const short=cause.length>43?cause.slice(0,40)+'…':cause;
+  const anchor=x+cardW/2,spineX=top?anchor+35:anchor-35;
+  const path=top
+   ?`M ${anchor} ${y+cardH} C ${anchor+12} ${y+cardH+48}, ${spineX-25} 220, ${spineX} 270`
+   :`M ${anchor} ${y} C ${anchor-12} ${y-48}, ${spineX+25} 320, ${spineX} 270`;
+  return `<path d="${path}" fill="none" stroke="${p.stroke}" stroke-width="5" stroke-linecap="round" opacity=".9"/>
+  <rect x="${x}" y="${y}" width="${cardW}" height="${cardH}" rx="22" fill="${p.fill}" stroke="${p.stroke}" stroke-width="1.6"/>
+  <circle cx="${x+42}" cy="${y+42}" r="23" fill="#fff" opacity=".8"/>
+  <text x="${x+42}" y="${y+49}" text-anchor="middle" font-size="23" fill="#173b62">${p.icon}</text>
+  <text data-fishbone-svg-title="${i}" x="${x+78}" y="${y+39}" font-size="15" font-weight="750" fill="#102b46">${esc(title)}</text>
+  <text data-fishbone-svg-causes="${i}" x="${x+78}" y="${y+70}" font-size="13" fill="#526b83">${esc(short)}</text>`;
+ }).join('');
+ const svg=`<svg viewBox="0 0 1300 550" role="img" aria-label="Diagrama de Ishikawa com seis categorias editáveis e hipóteses de investigação">
+ <defs><marker id="fishArrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 Z" fill="#28658d"/></marker></defs>
+ <path d="M35 270 H1100" stroke="#28658d" stroke-width="5" stroke-linecap="round" marker-end="url(#fishArrow)"/>
+ ${cards}
+ <rect x="1120" y="218" width="158" height="104" rx="22" fill="#e7f8f5" stroke="#35b7ad" stroke-width="2.5"/>
+ <circle cx="1199" cy="245" r="15" fill="#27b6aa"/><path d="M1192 245 l5 5 9 -11" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+ <text x="1199" y="282" text-anchor="middle" font-size="15" font-weight="750" fill="#102b46">Efeito a</text>
+ <text x="1199" y="302" text-anchor="middle" font-size="15" font-weight="750" fill="#102b46">investigar</text>
+ </svg>`;
  return `<div class="fishbone"><span class="tag teal">Investigação de causas</span><h3>Diagrama de Ishikawa</h3><p class="muted" style="font-size:12px;margin:3px 0">Efeito em análise: <b>${esc(focus)}</b>. As sugestões são hipóteses para investigação, não causas comprovadas.</p><div class="fishbone-diagram">${svg}</div><div class="fishbone-edit-grid">${FISHBONE_GROUPS.map((g,i)=>`<div class="fishbone-edit"><label for="fishbone${i}">${esc(g[0])}</label><textarea id="fishbone${i}" data-fishbone="${i}">${esc(g[1].join('\n'))}</textarea></div>`).join('')}</div><p class="decision-note">Edite as hipóteses, exclua as que não se aplicam ou acrescente fatores identificados pela liderança. As alterações também atualizam os ramos do diagrama e são consideradas no texto do 5W2H. Verifique as hipóteses antes de transformá-las em ações.</p></div>`;
+}
+sc(g[0])}</label><textarea id="fishbone${i}" data-fishbone="${i}">${esc(g[1].join('\n'))}</textarea></div>`).join('')}</div><p class="decision-note">Edite as hipóteses, exclua as que não se aplicam ou acrescente fatores identificados pela liderança. As alterações também atualizam os ramos do diagrama e são consideradas no texto do 5W2H. Verifique as hipóteses antes de transformá-las em ações.</p></div>`;
 }
 function refreshFishboneDiagram(){
  document.querySelectorAll('[data-fishbone]').forEach(el=>{
